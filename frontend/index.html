@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HYNEX — Streetwear</title>
+  <meta name="description" content="HYNEX — Abbigliamento streetwear contemporaneo. Minimal. Essenziale. Autentico." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       NAVBAR
+  ══════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="navbar__logo">HYNEX</a>
+
+    <ul class="navbar__nav">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="catalogo.html">Catalogo</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+
+    <div class="navbar__actions">
+      <a href="carrello.html" class="navbar__cart-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Carrello
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════
+       HERO
+  ══════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__noise"></div>
+
+    <div class="hero__content container">
+      <p class="hero__eyebrow">Nuova Collezione — SS 2025</p>
+
+      <h1 class="hero__title">
+        DEFINE<br>
+        <em>YOUR</em><br>
+        EDGE
+      </h1>
+
+      <div class="hero__footer">
+        <a href="catalogo.html" class="hero__cta">
+          Esplora il Catalogo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <div class="hero__meta">
+          Streetwear contemporaneo<br>
+          Qualità senza compromessi
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__scroll">Scroll</div>
+  </section>
+
+  <!-- ══════════════════════════════
+       MARQUEE BAR
+  ══════════════════════════════ -->
+  <div class="marquee-bar">
+    <div class="marquee-track" id="marqueeTrack">
+      <span>Nuova Collezione</span>
+      <span class="dot">◆</span>
+      <span>Spedizione Gratuita</span>
+      <span class="dot">◆</span>
+      <span>Made in Italy</span>
+      <span class="dot">◆</span>
+      <span>Qualità Premium</span>
+      <span class="dot">◆</span>
+      <span>100% Originale</span>
+      <span class="dot">◆</span>
+      <span>Resi Gratuiti</span>
+      <span class="dot">◆</span>
+      <span>Nuova Collezione</span>
+      <span class="dot">◆</span>
+      <span>Spedizione Gratuita</span>
+      <span class="dot">◆</span>
+      <span>Made in Italy</span>
+      <span class="dot">◆</span>
+      <span>Qualità Premium</span>
+      <span class="dot">◆</span>
+      <span>100% Originale</span>
+      <span class="dot">◆</span>
+      <span>Resi Gratuiti</span>
+      <span class="dot">◆</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       NUOVI ARRIVI
+  ══════════════════════════════ -->
+  <main>
+    <section class="container" id="nuoviArrivi">
+      <div class="section-header reveal">
+        <div class="section-header__left">
+          <span class="section-label">Collezione</span>
+          <h2 class="section-header__title">NUOVI ARRIVI</h2>
+        </div>
+        <a href="catalogo.html" class="section-header__link">
+          Vedi tutto
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid-products" id="productsGrid">
+        <!-- Skeleton loaders -->
+        <div class="product-card skeleton">
+          <div class="product-card__img-wrap"></div>
+          <div class="product-card__info">
+            <div class="product-card__category">—</div>
+            <div class="product-card__name">—</div>
+            <div class="product-card__price">—</div>
+          </div>
+        </div>
+        <div class="product-card skeleton">
+          <div class="product-card__img-wrap"></div>
+          <div class="product-card__info">
+            <div class="product-card__category">—</div>
+            <div class="product-card__name">—</div>
+            <div class="product-card__price">—</div>
+          </div>
+        </div>
+        <div class="product-card skeleton">
+          <div class="product-card__img-wrap"></div>
+          <div class="product-card__info">
+            <div class="product-card__category">—</div>
+            <div class="product-card__name">—</div>
+            <div class="product-card__price">—</div>
+          </div>
+        </div>
+        <div class="product-card skeleton">
+          <div class="product-card__img-wrap"></div>
+          <div class="product-card__info">
+            <div class="product-card__category">—</div>
+            <div class="product-card__name">—</div>
+            <div class="product-card__price">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         CATEGORIE
+    ══════════════════════════════ -->
+    <section class="categories-section container">
+      <div class="section-header reveal" style="padding-top:0; border-bottom:1px solid var(--border);">
+        <div class="section-header__left">
+          <span class="section-label">Sfoglia</span>
+          <h2 class="section-header__title">CATEGORIE</h2>
+        </div>
+        <a href="catalogo.html" class="section-header__link">
+          Tutto il catalogo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="categories-grid" id="categoriesGrid">
+        <!-- populate via JS -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         ABOUT STRIP
+    ══════════════════════════════ -->
+    <section class="about-strip container reveal">
+      <div>
+        <h2 class="about-strip__title">NON SOLO<br>MODA</h2>
+        <p class="about-strip__text">
+          HYNEX nasce dall'idea che il vestiario sia un linguaggio.
+          Ogni capo è progettato per chi non ha paura di occupare spazio —
+          essenziale nella forma, preciso nella qualità.
+        </p>
+        <a href="about.html" class="btn btn-outline" style="margin-top:2rem;">
+          La nostra storia
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+      <div class="about-strip__stats">
+        <div class="stat-box reveal">
+          <span class="stat-box__num">200+</span>
+          <span class="stat-box__label">Prodotti</span>
+        </div>
+        <div class="stat-box reveal">
+          <span class="stat-box__num">100%</span>
+          <span class="stat-box__label">Qualità</span>
+        </div>
+        <div class="stat-box reveal">
+          <span class="stat-box__num">48h</span>
+          <span class="stat-box__label">Consegna</span>
+        </div>
+        <div class="stat-box reveal">
+          <span class="stat-box__num">∞</span>
+          <span class="stat-box__label">Stile</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════════════════════
+       FOOTER
+  ══════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <span class="footer__logo">HYNEX</span>
+          <p class="footer__tagline">Streetwear contemporaneo.<br>Minimal. Essenziale. Autentico.</p>
+        </div>
+
+        <div class="footer__nav-group">
+          <h4>Negozio</h4>
+          <ul>
+            <li><a href="catalogo.html">Catalogo</a></li>
+            <li><a href="catalogo.html?cat=t-shirt">T-Shirt</a></li>
+            <li><a href="catalogo.html?cat=felpe">Felpe</a></li>
+            <li><a href="catalogo.html?cat=pantaloni">Pantaloni</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__nav-group">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="about.html">Chi siamo</a></li>
+            <li><a href="about.html#contatti">Contatti</a></li>
+            <li><a href="#">Resi e Rimborsi</a></li>
+            <li><a href="#">Spedizioni</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__nav-group">
+          <h4>Seguici</h4>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">TikTok</a></li>
+            <li><a href="#">Pinterest</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 HYNEX — Tutti i diritti riservati</p>
+        <div class="footer__legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie</a>
+          <a href="#">Termini</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ══════════════════════════════
+       SCRIPTS
+  ══════════════════════════════ -->
+  <script src="js/main.js"></script>
+  <script>
+    /* ── Prodotti dal DB ───────────────────────── */
+    async function loadProducts() {
+      try {
+        const res = await fetch('http://localhost:3000/api/prodotti');
+        if (!res.ok) throw new Error('Network error');
+        const prodotti = await res.json();
+
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = '';
+
+        // Mostriamo massimo 4 prodotti nella home (nuovi arrivi)
+        const slice = prodotti.slice(0, 4);
+
+        if (slice.length === 0) {
+          grid.innerHTML = '<p style="color:var(--grey);padding:2rem 0;grid-column:1/-1">Nessun prodotto disponibile.</p>';
+          return;
+        }
+
+        slice.forEach((p, i) => {
+          const card = document.createElement('div');
+          card.className = 'product-card reveal';
+          card.style.animationDelay = `${i * 0.08}s`;
+          card.innerHTML = `
+            <div class="product-card__img-wrap">
+              ${p.immagine_url
+                ? `<img class="product-card__img" src="${p.immagine_url}" alt="${p.nome}" loading="lazy" />`
+                : `<div class="product-card__placeholder">
+                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+                       <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                       <polyline points="21 15 16 10 5 21"/>
+                     </svg>
+                   </div>`
+              }
+              <span class="product-card__badge">New</span>
+              <button class="product-card__quick-add" data-id="${p.id}" data-nome="${p.nome}" data-prezzo="${p.prezzo}">
+                Aggiungi al carrello
+              </button>
+            </div>
+            <div class="product-card__info">
+              <div class="product-card__category">${p.categoria_nome || 'Hynex'}</div>
+              <div class="product-card__name">${p.nome}</div>
+              <div class="product-card__price">€ ${parseFloat(p.prezzo).toFixed(2)}</div>
+            </div>
+          `;
+
+          // Click sulla card → pagina prodotto
+          card.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('product-card__quick-add')) {
+              window.location.href = `prodotto.html?id=${p.id}`;
+            }
+          });
+
+          grid.appendChild(card);
+        });
+
+        // Quick add
+        grid.querySelectorAll('.product-card__quick-add').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            addToCart({
+              id: btn.dataset.id,
+              nome: btn.dataset.nome,
+              prezzo: btn.dataset.prezzo,
+              qty: 1
+            });
+          });
+        });
+
+        // Trigger reveal
+        requestAnimationFrame(() => {
+          grid.querySelectorAll('.reveal').forEach(el => observeReveal(el));
+        });
+
+      } catch (err) {
+        console.error('Errore caricamento prodotti:', err);
+        document.getElementById('productsGrid').innerHTML =
+          '<p style="color:var(--grey);padding:2rem 0;grid-column:1/-1">Impossibile caricare i prodotti. Assicurati che il server sia avviato.</p>';
+      }
+    }
+
+    /* ── Categorie dal DB ─────────────────────── */
+    async function loadCategories() {
+      try {
+        const res = await fetch('http://localhost:3000/api/categorie');
+        if (!res.ok) throw new Error('Network error');
+        const cats = await res.json();
+
+        const grid = document.getElementById('categoriesGrid');
+        grid.innerHTML = '';
+
+        cats.forEach(c => {
+          const card = document.createElement('a');
+          card.className = 'category-card reveal';
+          card.href = `catalogo.html?categoria=${c.id}`;
+          card.innerHTML = `
+            <span class="category-card__count">— ${String(c.num_prodotti || '').padStart(2,'0')}</span>
+            <span class="category-card__name">${c.nome.toUpperCase()}</span>
+          `;
+          grid.appendChild(card);
+          observeReveal(card);
+        });
+      } catch (err) {
+        console.error('Errore categorie:', err);
+        document.getElementById('categoriesGrid').innerHTML =
+          '<p style="color:var(--grey);padding:2rem 0">Impossibile caricare le categorie.</p>';
+      }
+    }
+
+    loadProducts();
+    loadCategories();
+  </script>
+</body>
+</html>
