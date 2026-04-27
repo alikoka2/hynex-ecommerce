@@ -20,4 +20,4 @@ Sito e-commerce di abbigliamento urban/streetwear realizzato come progetto unive
 5. Apri il browser su `http://localhost:3000`
 
 ## Autore
-Ali Koka
+Ali Koka (matricola: 346288)
