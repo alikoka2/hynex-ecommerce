@@ -1,0 +1,24 @@
+{
+  "name": "hynex-ecommerce",
+  "version": "1.0.0",
+  "description": "sito e-commerce di abbigliamento | progetto programmazione web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alikoka2/hynex-ecommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alikoka2/hynex-ecommerce/issues"
+  },
+  "homepage": "https://github.com/alikoka2/hynex-ecommerce#readme",
+  "dependencies": {
+    "mysql2": "^3.22.3"
+  }
+}
