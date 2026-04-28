@@ -7,6 +7,37 @@
   <meta name="description" content="Sfoglia il catalogo HYNEX — abbigliamento streetwear contemporaneo." />
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* ── Layout utility classes (no inline styles) ── */
+    .catalog-page-hero {
+      margin-top: 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .catalog-page-hero__inner {
+      padding-top: 3.5rem;
+      padding-bottom: 2.5rem;
+    }
+    .catalog-page-hero__label {
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .catalog-page-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 1;
+    }
+    .catalog-container-flush {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .catalog-toolbar__right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .footer--spaced {
+      margin-top: 4rem;
+    }
+
     /* ── Catalogo-specific styles ── */
     .catalog-layout {
       display: grid;
@@ -91,6 +122,7 @@
     }
     .price-range-wrap input[type="range"] {
       -webkit-appearance: none;
+      appearance: none;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -179,6 +211,7 @@
 
     .sort-select {
       -webkit-appearance: none;
+      appearance: none;
       background: transparent;
       border: 1px solid var(--border);
       color: var(--grey);
@@ -305,10 +338,10 @@
   </nav>
 
   <!-- PAGE HERO -->
-  <div style="margin-top:64px; border-bottom:1px solid var(--border);">
-    <div class="container" style="padding-top:3.5rem; padding-bottom:2.5rem;">
-      <span class="section-label" style="display:block;margin-bottom:0.6rem;">Hynex Store</span>
-      <h1 style="font-family:var(--font-display);font-size:clamp(3rem,8vw,7rem);line-height:1;">CATALOGO</h1>
+  <div class="catalog-page-hero">
+    <div class="container catalog-page-hero__inner">
+      <span class="section-label catalog-page-hero__label">Hynex Store</span>
+      <h1 class="catalog-page-hero__title">CATALOGO</h1>
       <p class="page-hero__sub" id="pageSubtitle">Tutti i prodotti</p>
     </div>
   </div>
@@ -316,7 +349,7 @@
   <!-- Overlay mobile -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <div class="container" style="padding-top:0;padding-bottom:0;">
+  <div class="container catalog-container-flush">
     <div class="catalog-layout">
 
       <!-- SIDEBAR -->
@@ -335,7 +368,7 @@
             <button id="resetPrezzo">Reset</button>
           </div>
           <div class="price-range-wrap">
-            <input type="range" id="priceRange" min="0" max="300" value="300" step="5" />
+            <input type="range" id="priceRange" min="0" max="300" value="300" step="5" aria-label="Prezzo massimo" title="Prezzo massimo" />
           </div>
           <div class="price-range__labels">
             € 0 — <span id="priceLabel">300</span>
@@ -370,8 +403,8 @@
             <span class="catalog-count" id="catalogCount"><strong>—</strong> prodotti</span>
             <div class="active-filters" id="activeFilters"></div>
           </div>
-          <div style="display:flex;align-items:center;gap:0.8rem;">
-            <select class="sort-select" id="sortSelect">
+          <div class="catalog-toolbar__right">
+            <select class="sort-select" id="sortSelect" aria-label="Ordina prodotti" title="Ordina prodotti">
               <option value="default">Ordina: Default</option>
               <option value="price-asc">Prezzo: crescente</option>
               <option value="price-desc">Prezzo: decrescente</option>
@@ -407,7 +440,7 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="footer" style="margin-top:4rem;">
+  <footer class="footer footer--spaced">
     <div class="container">
       <div class="footer__top">
         <div>
