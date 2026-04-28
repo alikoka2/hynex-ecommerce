@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalogo — HYNEX</title>
+  <meta name="description" content="Sfoglia il catalogo HYNEX — abbigliamento streetwear contemporaneo." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Catalogo-specific styles ── */
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 0;
+      min-height: 60vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    .sidebar::-webkit-scrollbar { width: 0; }
+
+    .filter-group { margin-bottom: 2.5rem; }
+    .filter-group__title {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filter-group__title button {
+      font-size: 0.58rem;
+      color: var(--grey);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    .filter-group__title button:hover { color: var(--white); }
+
+    .filter-chip-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .filter-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--grey);
+      font-size: 0.75rem;
+      font-family: var(--font-body);
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+      text-align: left;
+    }
+    .filter-chip:hover { border-color: var(--grey-2); color: var(--white); }
+    .filter-chip.active {
+      border-color: var(--white);
+      color: var(--white);
+      background: var(--border);
+    }
+    .filter-chip__dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--grey);
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+    .filter-chip.active .filter-chip__dot { background: var(--white); }
+
+    /* Prezzo range */
+    .price-range-wrap {
+      position: relative;
+      height: 1px;
+      background: var(--border);
+      margin: 1.2rem 0;
+    }
+    .price-range-wrap input[type="range"] {
+      -webkit-appearance: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 1px;
+      background: transparent;
+      outline: none;
+      pointer-events: all;
+    }
+    .price-range-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--white);
+      cursor: pointer;
+      border: 2px solid var(--black);
+      outline: 1px solid var(--white);
+    }
+    .price-range__labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--grey);
+    }
+    .price-range__labels span { color: var(--white); font-weight: 500; }
+
+    /* Sidebar mobile toggle */
+    .sidebar-toggle {
+      display: none;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--grey);
+      font-size: 0.72rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .sidebar-toggle:hover { color: var(--white); border-color: var(--grey); }
+
+    /* TOOLBAR */
+    .catalog-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .catalog-toolbar__left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .catalog-count {
+      font-size: 0.72rem;
+      color: var(--grey);
+      letter-spacing: 0.1em;
+    }
+    .catalog-count strong { color: var(--white); }
+
+    .active-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .active-filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--grey-3);
+      cursor: pointer;
+      background: none;
+      font-family: var(--font-body);
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .active-filter-tag:hover { border-color: var(--grey); color: var(--white); }
+
+    .sort-select {
+      -webkit-appearance: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 2rem 0.5rem 0.8rem;
+      outline: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.6rem center;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .sort-select:hover, .sort-select:focus { border-color: var(--grey); color: var(--white); }
+    .sort-select option { background: var(--black); color: var(--white); }
+
+    .grid-toggle { display: flex; gap: 0.3rem; }
+    .grid-toggle button {
+      padding: 0.45rem;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .grid-toggle button.active,
+    .grid-toggle button:hover { border-color: var(--grey); color: var(--white); }
+
+    /* Grid variants */
+    .catalog-grid { padding: 1px; }
+    .catalog-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .catalog-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem;
+      text-align: center;
+      gap: 1rem;
+    }
+    .empty-state__icon { opacity: 0.15; margin-bottom: 0.5rem; }
+    .empty-state__title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+    }
+    .empty-state__sub { font-size: 0.82rem; color: var(--grey); }
+    .empty-state__reset {
+      margin-top: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid var(--border);
+      color: var(--grey);
+      font-size: 0.7rem;
+      font-family: var(--font-body);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: none;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .empty-state__reset:hover { border-color: var(--white); color: var(--white); }
+
+    /* Overlay mobile sidebar */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 89;
+    }
+    .sidebar-overlay.show { display: block; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .catalog-layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        top: 64px; left: 0; bottom: 0;
+        width: 280px;
+        z-index: 90;
+        background: var(--black);
+        transform: translateX(-100%);
+        transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-toggle { display: flex; }
+      .catalog-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .catalog-grid.cols-4,
+      .catalog-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .catalog-toolbar { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="index.html" class="navbar__logo">HYNEX</a>
+    <ul class="navbar__nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="catalogo.html" class="active">Catalogo</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="navbar__actions">
+      <a href="carrello.html" class="navbar__cart-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Carrello
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div style="margin-top:64px; border-bottom:1px solid var(--border);">
+    <div class="container" style="padding-top:3.5rem; padding-bottom:2.5rem;">
+      <span class="section-label" style="display:block;margin-bottom:0.6rem;">Hynex Store</span>
+      <h1 style="font-family:var(--font-display);font-size:clamp(3rem,8vw,7rem);line-height:1;">CATALOGO</h1>
+      <p class="page-hero__sub" id="pageSubtitle">Tutti i prodotti</p>
+    </div>
+  </div>
+
+  <!-- Overlay mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="container" style="padding-top:0;padding-bottom:0;">
+    <div class="catalog-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <div class="filter-group">
+          <div class="filter-group__title">
+            Categoria
+            <button id="resetCategoria">Reset</button>
+          </div>
+          <div class="filter-chip-list" id="categorieList"></div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-group__title">
+            Prezzo max
+            <button id="resetPrezzo">Reset</button>
+          </div>
+          <div class="price-range-wrap">
+            <input type="range" id="priceRange" min="0" max="300" value="300" step="5" />
+          </div>
+          <div class="price-range__labels">
+            € 0 — <span id="priceLabel">300</span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <div class="filter-group__title">Disponibilità</div>
+          <div class="filter-chip-list">
+            <button class="filter-chip active" data-avail="all">
+              <span class="filter-chip__dot"></span> Tutti
+            </button>
+            <button class="filter-chip" data-avail="available">
+              <span class="filter-chip__dot"></span> Disponibili
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <div>
+        <div class="catalog-toolbar">
+          <div class="catalog-toolbar__left">
+            <button class="sidebar-toggle" id="sidebarToggle">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+              Filtri
+            </button>
+            <span class="catalog-count" id="catalogCount"><strong>—</strong> prodotti</span>
+            <div class="active-filters" id="activeFilters"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.8rem;">
+            <select class="sort-select" id="sortSelect">
+              <option value="default">Ordina: Default</option>
+              <option value="price-asc">Prezzo: crescente</option>
+              <option value="price-desc">Prezzo: decrescente</option>
+              <option value="name-asc">Nome: A→Z</option>
+              <option value="name-desc">Nome: Z→A</option>
+            </select>
+            <div class="grid-toggle">
+              <button id="grid4btn" class="active" title="4 colonne">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                  <rect x="0" y="0" width="6" height="6"/><rect x="10" y="0" width="6" height="6"/>
+                  <rect x="0" y="10" width="6" height="6"/><rect x="10" y="10" width="6" height="6"/>
+                </svg>
+              </button>
+              <button id="grid2btn" title="2 colonne">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                  <rect x="0" y="0" width="6" height="16"/><rect x="10" y="0" width="6" height="16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-products catalog-grid cols-4" id="catalogGrid">
+          <!-- Skeletons -->
+          <div class="product-card skeleton"><div class="product-card__img-wrap"></div><div class="product-card__info"><div class="product-card__category">—</div><div class="product-card__name">—</div><div class="product-card__price">—</div></div></div>
+          <div class="product-card skeleton"><div class="product-card__img-wrap"></div><div class="product-card__info"><div class="product-card__category">—</div><div class="product-card__name">—</div><div class="product-card__price">—</div></div></div>
+          <div class="product-card skeleton"><div class="product-card__img-wrap"></div><div class="product-card__info"><div class="product-card__category">—</div><div class="product-card__name">—</div><div class="product-card__price">—</div></div></div>
+          <div class="product-card skeleton"><div class="product-card__img-wrap"></div><div class="product-card__info"><div class="product-card__category">—</div><div class="product-card__name">—</div><div class="product-card__price">—</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" style="margin-top:4rem;">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <span class="footer__logo">HYNEX</span>
+          <p class="footer__tagline">Streetwear contemporaneo.<br>Minimal. Essenziale. Autentico.</p>
+        </div>
+        <div class="footer__nav-group">
+          <h4>Negozio</h4>
+          <ul>
+            <li><a href="catalogo.html">Catalogo</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">Chi siamo</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-group">
+          <h4>Info</h4>
+          <ul>
+            <li><a href="#">Spedizioni</a></li>
+            <li><a href="#">Resi</a></li>
+            <li><a href="about.html#contatti">Contatti</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 HYNEX — Tutti i diritti riservati</p>
+        <div class="footer__legal">
+          <a href="#">Privacy</a>
+          <a href="#">Cookie</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/catalogo.js"></script>
+</body>
+</html>
