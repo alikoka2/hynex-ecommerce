@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrello — HYNEX</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Layout ── */
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      padding: 6rem 0 8rem;
+      align-items: start;
+    }
+    @media(max-width: 900px) {
+      .cart-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Page header ── */
+    .cart-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .cart-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      letter-spacing: .04em;
+    }
+    .cart-header-count {
+      font-size: .8rem;
+      color: var(--grey);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Cart Items ── */
+    .cart-items { display: flex; flex-direction: column; gap: 0; }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 1.2rem;
+      align-items: center;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeSlideIn .3s ease;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:none; }
+    }
+
+    .cart-item__img {
+      width: 88px; height: 110px;
+      background: var(--grey-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-item__img img { width:100%; height:100%; object-fit:cover; }
+
+    .cart-item__info { flex: 1; }
+    .cart-item__name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: .05em;
+      margin-bottom: .3rem;
+    }
+    .cart-item__meta {
+      font-size: .78rem;
+      color: var(--grey);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: .8rem;
+    }
+    .cart-item__qty {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .qty-mini {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+    .qty-mini button {
+      width: 32px; height: 32px;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background .15s;
+    }
+    .qty-mini button:hover { background: var(--grey-2); }
+    .qty-mini span {
+      width: 32px; height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    .cart-item__right { text-align: right; }
+    .cart-item__price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: .04em;
+    }
+    .cart-item__remove {
+      background: transparent;
+      border: none;
+      color: var(--grey);
+      cursor: pointer;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: .4rem;
+      display: block;
+      transition: color .15s;
+    }
+    .cart-item__remove:hover { color: #f87171; }
+
+    /* ── Empty state ── */
+    .cart-empty {
+      text-align: center;
+      padding: 6rem 0;
+      display: none;
+    }
+    .cart-empty h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
+    .cart-empty p { color: var(--grey); margin-bottom: 2rem; }
+
+    /* ── Sidebar ordine ── */
+    .order-sidebar {
+      background: var(--grey-2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: sticky;
+      top: 100px;
+    }
+    .order-sidebar h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: .08em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .order-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: .88rem;
+      color: var(--grey);
+      margin-bottom: .7rem;
+    }
+    .order-line.total {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: .06em;
+      color: var(--white);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-top: .5rem;
+    }
+
+    /* ── Checkout form ── */
+    .checkout-form { margin-top: 1.6rem; display: flex; flex-direction: column; gap: .9rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-label {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 1rem;
+      margin-top: .5rem;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: .12em;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-checkout:hover { opacity: .85; }
+    .btn-checkout:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ── Success state ── */
+    .order-success {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 5rem 0;
+      display: none;
+    }
+    .order-success .check-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 2px solid #4ade80;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: #4ade80;
+    }
+    .order-success h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      margin-bottom: .8rem;
+    }
+    .order-success p { color: var(--grey); margin-bottom: 2rem; }
+    .order-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--grey);
+      letter-spacing: .15em;
+      margin-bottom: 2.5rem;
+    }
+    .success-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .checkout-disclaimer { font-size:.72rem; color:var(--grey); text-align:center; margin-top:.4rem; }
+    .form-label--section { margin-bottom:.2rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo">HYNEX</a>
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <a href="carrello.html" class="cart-icon active" id="cartIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container">
+
+    <!-- Successo -->
+    <div class="order-success" id="orderSuccess">
+      <div class="check-circle">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Ordine Confermato!</h2>
+      <p>Grazie per il tuo acquisto. Riceverai una conferma via email.</p>
+      <div class="order-number" id="orderNumber"></div>
+      <div class="success-actions">
+        <a href="catalogo.html" class="btn btn-outline">Continua lo shopping</a>
+        <a href="index.html" class="btn btn-primary">Torna alla home</a>
+      </div>
+    </div>
+
+    <!-- Cart Layout -->
+    <div class="cart-layout" id="cartLayout">
+
+      <!-- Items col -->
+      <div>
+        <div class="cart-header">
+          <h1>Carrello</h1>
+          <span class="cart-header-count" id="itemCount">0 articoli</span>
+        </div>
+
+        <!-- Empty state -->
+        <div class="cart-empty" id="cartEmpty">
+          <h2>Il carrello è vuoto</h2>
+          <p>Aggiungi qualcosa di bello dal nostro catalogo.</p>
+          <a href="catalogo.html" class="btn btn-primary">Vai al catalogo</a>
+        </div>
+
+        <!-- Items list -->
+        <div class="cart-items" id="cartItems"></div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="order-sidebar" id="orderSidebar">
+        <h2>Riepilogo Ordine</h2>
+
+        <div class="order-line">
+          <span>Subtotale</span>
+          <span id="subtotale">€ 0,00</span>
+        </div>
+        <div class="order-line">
+          <span>Spedizione</span>
+          <span id="spedizione">—</span>
+        </div>
+        <div class="order-line total">
+          <span>Totale</span>
+          <span id="totale">€ 0,00</span>
+        </div>
+
+        <div class="checkout-form" id="checkoutForm">
+          <p class="form-label form-label--section">Dati di spedizione</p>
+
+          <div class="form-group">
+            <label class="form-label" for="nome">Nome completo</label>
+            <input class="input" type="text" id="nome" placeholder="Mario Rossi" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="input" type="email" id="email" placeholder="mario@esempio.it" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="indirizzo">Indirizzo</label>
+            <input class="input" type="text" id="indirizzo" placeholder="Via Roma 1" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="citta">Città</label>
+              <input class="input" type="text" id="citta" placeholder="Milano" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cap">CAP</label>
+              <input class="input" type="text" id="cap" placeholder="20100" maxlength="5" required />
+            </div>
+          </div>
+
+          <button class="btn-checkout" id="btnCheckout" disabled>
+            CONFERMA ORDINE
+          </button>
+          <p class="checkout-disclaimer">
+            Pagamento simulato — nessun addebito reale
+          </p>
+        </div>
+      </aside>
+
+    </div><!-- /cart-layout -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer footer--spaced">
+    <div class="container footer__inner">
+      <span class="footer__logo">HYNEX</span>
+      <p class="footer__copy">© 2025 Hynex. Tutti i diritti riservati.</p>
+      <div class="footer__links">
+        <a href="about.html">About</a>
+        <a href="catalogo.html">Shop</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/carrello.js"></script>
+</body>
+</html>

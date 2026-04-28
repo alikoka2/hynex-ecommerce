@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prodotto — HYNEX</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      padding: 1.2rem 0;
+      font-size: .8rem;
+      color: var(--grey);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--grey); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb span { margin: 0 .4rem; }
+
+    /* ── Product Layout ── */
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 6rem;
+    }
+    @media(max-width:768px){
+      .product-detail { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ── Gallery ── */
+    .product-gallery { position: sticky; top: 100px; align-self: start; }
+    .gallery-main {
+      aspect-ratio: 3/4;
+      background: var(--grey-2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: .6rem;
+    }
+    .gallery-main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .gallery-main:hover img { transform: scale(1.04); }
+    .gallery-thumbs {
+      display: flex;
+      gap: .5rem;
+    }
+    .gallery-thumb {
+      width: 64px; height: 80px;
+      background: var(--grey-2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: .5;
+      transition: opacity .2s;
+    }
+    .gallery-thumb.active, .gallery-thumb:hover { opacity: 1; border-color: var(--white); }
+    .gallery-thumb img { width:100%; height:100%; object-fit:cover; }
+
+    /* ── Info Panel ── */
+    .product-info { display: flex; flex-direction: column; gap: 1.6rem; }
+
+    .product-category {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .product-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height: 1;
+      color: var(--white);
+      letter-spacing: .02em;
+    }
+
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--white);
+      letter-spacing: .05em;
+    }
+
+    .product-description {
+      font-size: .9rem;
+      color: var(--grey);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: 1.4rem;
+    }
+
+    /* ── Selector (taglia / colore) ── */
+    .selector-label {
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: .6rem;
+    }
+    .selector-label strong { color: var(--white); font-weight: 500; }
+
+    .size-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .size-btn {
+      width: 48px; height: 48px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .size-btn:hover { border-color: var(--white); }
+    .size-btn.selected { background: var(--white); color: var(--black); border-color: var(--white); }
+    .size-btn:disabled { opacity: .25; cursor: not-allowed; }
+
+    .color-grid { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .color-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color .15s, transform .15s;
+    }
+    .color-btn:hover, .color-btn.selected { border-color: var(--white); transform: scale(1.1); }
+
+    /* ── Qty + CTA ── */
+    .qty-row { display: flex; align-items: center; gap: 1rem; }
+    .qty-ctrl {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+    .qty-ctrl button {
+      width: 40px; height: 48px;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .qty-ctrl button:hover { background: var(--grey-2); }
+    .qty-ctrl input {
+      width: 48px; height: 48px;
+      background: transparent;
+      border: none;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      color: var(--white);
+      text-align: center;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+    }
+
+    .btn-add-cart {
+      flex: 1;
+      height: 48px;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: .1em;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-add-cart:hover { opacity: .85; }
+    .btn-add-cart:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ── Stock badge ── */
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      color: var(--grey);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .stock-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+    }
+    .stock-badge.low .dot { background: #facc15; }
+    .stock-badge.out .dot { background: #f87171; }
+
+    /* ── Accordion dettagli ── */
+    .accordion { border-top: 1px solid var(--border); }
+    .accordion-item { border-bottom: 1px solid var(--border); }
+    .accordion-trigger {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 1rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-trigger svg { transition: transform .25s; }
+    .accordion-trigger.open svg { transform: rotate(180deg); }
+    .accordion-body {
+      font-size: .87rem;
+      color: var(--grey);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, padding .35s;
+    }
+    .accordion-body.open { max-height: 300px; padding-bottom: 1rem; }
+
+    /* ── Skeleton ── */
+    .skeleton-block {
+      background: linear-gradient(90deg, var(--grey-2) 25%, #2a2a2a 50%, var(--grey-2) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 2px;
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .p-skeleton-cat    { height:14px; width:100px; }
+    .p-skeleton-nome   { height:80px; }
+    .p-skeleton-prezzo { height:36px; width:120px; }
+    .p-skeleton-desc   { height:72px; }
+    .p-hidden          { display:none; }
+    .main-content      { padding-top: 6rem; }
+    .skeleton-fill     { width:100%; height:100%; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo">HYNEX</a>
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html" class="active">Catalogo</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <a href="carrello.html" class="cart-icon" id="cartIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container main-content">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" id="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="catalogo.html">Catalogo</a>
+      <span>/</span>
+      <span id="breadcrumbNome">—</span>
+    </nav>
+
+    <!-- Product Detail -->
+    <section class="product-detail">
+
+      <!-- Gallery -->
+      <div class="product-gallery" id="gallery">
+        <div class="gallery-main" id="galleryMain">
+          <div class="skeleton-block skeleton-fill"></div>
+        </div>
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-info" id="productInfo">
+        <div class="product-category skeleton-block p-skeleton-cat" id="pCategoria"></div>
+        <div class="product-title skeleton-block p-skeleton-nome" id="pNome"></div>
+        <div class="product-price skeleton-block p-skeleton-prezzo" id="pPrezzo"></div>
+        <div class="product-description skeleton-block p-skeleton-desc" id="pDescrizione"></div>
+
+        <!-- Colore -->
+        <div id="colorSection" class="p-hidden">
+          <p class="selector-label">Colore: <strong id="selectedColorLabel">—</strong></p>
+          <div class="color-grid" id="colorGrid"></div>
+        </div>
+
+        <!-- Taglia -->
+        <div id="sizeSection" class="p-hidden">
+          <p class="selector-label">Taglia: <strong id="selectedSizeLabel">—</strong></p>
+          <div class="size-grid" id="sizeGrid"></div>
+        </div>
+
+        <!-- Stock -->
+        <div id="stockInfo" class="p-hidden">
+          <span class="stock-badge" id="stockBadge">
+            <span class="dot"></span>
+            <span id="stockText">Disponibile</span>
+          </span>
+        </div>
+
+        <!-- Qty + CTA -->
+        <div class="qty-row">
+          <div class="qty-ctrl">
+            <button id="qtyMinus" onclick="changeQty(-1)">−</button>
+            <input type="number" id="qtyInput" value="1" min="1" max="99" readonly aria-label="Quantità" title="Quantità" />
+            <button id="qtyPlus" onclick="changeQty(1)">+</button>
+          </div>
+          <button class="btn-add-cart" id="btnAddCart" disabled>AGGIUNGI AL CARRELLO</button>
+        </div>
+
+        <!-- Accordion -->
+        <div class="accordion" id="accordion">
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              Dettagli prodotto
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body" id="accordionDettagli">
+              <span id="dettagliText">—</span>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              Spedizione &amp; resi
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              Spedizione gratuita per ordini superiori a €80. Reso gratuito entro 30 giorni dall'acquisto. Il prodotto deve essere nelle condizioni originali con etichette intatte.
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              Guida alle taglie
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              XS: petto 86–91cm — S: 91–96cm — M: 96–101cm — L: 101–106cm — XL: 106–111cm — XXL: 111–116cm. Per dubbi scegli la taglia superiore.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /product-info -->
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer footer--spaced">
+    <div class="container footer__inner">
+      <span class="footer__logo">HYNEX</span>
+      <p class="footer__copy">© 2025 Hynex. Tutti i diritti riservati.</p>
+      <div class="footer__links">
+        <a href="about.html">About</a>
+        <a href="catalogo.html">Shop</a>
+        <a href="carrello.html">Carrello</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/prodotto.js"></script>
+</body>
+</html>

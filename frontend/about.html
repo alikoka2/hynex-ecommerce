@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — HYNEX</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Page Hero ── */
+    .about-hero {
+      padding: 9rem 0 6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-hero__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: .95;
+      letter-spacing: .02em;
+      margin-top: 1.5rem;
+    }
+    .about-hero__title em {
+      font-style: normal;
+      color: var(--grey);
+    }
+    .about-hero__sub {
+      font-size: 1rem;
+      color: var(--grey);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-top: 2rem;
+    }
+
+    /* ── About grid ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem 4rem;
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    @media(max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    .about-block__num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .about-block__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: .05em;
+      margin-bottom: 1rem;
+    }
+    .about-block__text {
+      font-size: .9rem;
+      color: var(--grey);
+      line-height: 1.8;
+    }
+
+    /* ── Valori strip ── */
+    .values-strip {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .values-strip h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 3rem;
+    }
+    .values-list {
+      display: flex;
+      gap: 0;
+    }
+    .value-item {
+      flex: 1;
+      padding: 2rem 1.5rem;
+      border-left: 1px solid var(--border);
+    }
+    .value-item:last-child { border-right: 1px solid var(--border); }
+    .value-item__icon {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .value-item__name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: .06em;
+      margin-bottom: .5rem;
+    }
+    .value-item__desc { font-size: .82rem; color: var(--grey); line-height: 1.6; }
+    @media(max-width: 768px) {
+      .values-list { flex-direction: column; }
+      .value-item { border-left: none; border-top: 1px solid var(--border); }
+      .value-item:last-child { border-right: none; }
+    }
+
+    /* ── Team ── */
+    .team-section { padding: 5rem 0; border-bottom: 1px solid var(--border); }
+    .team-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: .04em;
+      margin-bottom: 3rem;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .team-card {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: border-color .2s;
+    }
+    .team-card:hover { border-color: var(--white); }
+    .team-avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--grey-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--grey);
+      margin-bottom: 1rem;
+    }
+    .team-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: .05em;
+      margin-bottom: .2rem;
+    }
+    .team-role { font-size: .78rem; color: var(--grey); letter-spacing: .08em; text-transform: uppercase; }
+
+    /* ── Contatti ── */
+    .contact-section { padding: 5rem 0 7rem; }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+    @media(max-width: 768px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    .contact-info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .contact-info p { color: var(--grey); line-height: 1.8; font-size: .9rem; margin-bottom: 2rem; }
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      margin-top: 2rem;
+    }
+    .contact-detail-item {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      font-size: .88rem;
+      color: var(--grey);
+    }
+    .contact-detail-item svg { flex-shrink: 0; color: var(--white); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+    textarea.input {
+      resize: vertical;
+      min-height: 120px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-send {
+      align-self: flex-start;
+      padding: .85rem 2.4rem;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: .12em;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-send:hover { opacity: .85; }
+
+    /* Conferma form */
+    .form-confirm {
+      display: none;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .form-confirm h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: .5rem;
+    }
+    .form-confirm p { color: var(--grey); font-size: .88rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="index.html" class="navbar__logo">HYNEX</a>
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="catalogo.html">Catalogo</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <a href="carrello.html" class="cart-icon" id="cartIcon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero container reveal">
+    <p class="section-label">Chi siamo</p>
+    <h1 class="about-hero__title">
+      IL FUTURO<br>
+      <em>È ADESSO.</em>
+    </h1>
+    <p class="about-hero__sub">
+      Hynex nasce dall'ossessione per il dettaglio, dalla strada e da una visione precisa:
+      abbigliamento che non chiede permesso. Fondato nel 2024, costruito per durare.
+    </p>
+  </section>
+
+  <!-- ABOUT GRID -->
+  <section class="about-grid container">
+    <div class="about-block reveal">
+      <div class="about-block__num">01</div>
+      <h3 class="about-block__title">L'Origine</h3>
+      <p class="about-block__text">
+        Hynex è partito da un garage, un laptop e troppi caffè. L'idea era semplice:
+        creare capi che sembrano costosi ma non lo sono. Design streetwear pulito, senza fronzoli,
+        per chi sa già cosa vuole vestire la mattina.
+      </p>
+    </div>
+    <div class="about-block reveal">
+      <div class="about-block__num">02</div>
+      <h3 class="about-block__title">Il Prodotto</h3>
+      <p class="about-block__text">
+        Ogni pezzo viene pensato con cura ossessiva: dal peso del tessuto alla caduta del taglio.
+        Niente loghi urlati. Niente hype artificiale. Solo capi che funzionano ogni giorno,
+        in ogni contesto, per anni.
+      </p>
+    </div>
+    <div class="about-block reveal">
+      <div class="about-block__num">03</div>
+      <h3 class="about-block__title">La Produzione</h3>
+      <p class="about-block__text">
+        Lavoriamo con fornitori europei selezionati, con standard etici e ambientali seri.
+        Piccole tirature, zero sprechi. Preferiamo produrre meno e farlo bene piuttosto
+        che saturare il mercato di roba inutile.
+      </p>
+    </div>
+    <div class="about-block reveal">
+      <div class="about-block__num">04</div>
+      <h3 class="about-block__title">La Community</h3>
+      <p class="about-block__text">
+        Chi porta Hynex capisce la differenza tra moda e stile. Siamo una community
+        silenziosa di persone che preferiscono i fatti alle parole.
+        Il prodotto parla da solo. Sempre.
+      </p>
+    </div>
+  </section>
+
+  <!-- VALORI -->
+  <section class="values-strip container">
+    <h2>I nostri valori</h2>
+    <div class="values-list">
+      <div class="value-item reveal">
+        <span class="value-item__icon">◼</span>
+        <div class="value-item__name">Qualità</div>
+        <p class="value-item__desc">Materiali certificati, manifattura controllata, zero compromessi.</p>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-item__icon">◈</span>
+        <div class="value-item__name">Minimalismo</div>
+        <p class="value-item__desc">Il design è quello che togli, non quello che aggiungi.</p>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-item__icon">◉</span>
+        <div class="value-item__name">Sostenibilità</div>
+        <p class="value-item__desc">Piccole tirature. Packaging riciclato. Nessuno spreco deliberato.</p>
+      </div>
+      <div class="value-item reveal">
+        <span class="value-item__icon">◇</span>
+        <div class="value-item__name">Autenticità</div>
+        <p class="value-item__desc">Nessun endorsement pagato. Solo prodotto e persone reali.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM (placeholder) -->
+  <section class="team-section container">
+    <h2>Il Team</h2>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">AK</div>
+        <div class="team-name">Ali Koka</div>
+        <div class="team-role">Founder &amp; CEO</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">CD</div>
+        <div class="team-name">Creative Dir.</div>
+        <div class="team-role">Brand &amp; Design</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">TK</div>
+        <div class="team-name">Tech Lead</div>
+        <div class="team-role">Sviluppo &amp; Ops</div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-avatar">MR</div>
+        <div class="team-name">Marketing</div>
+        <div class="team-role">Growth &amp; Community</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATTI -->
+  <section class="contact-section container">
+    <div class="contact-layout">
+
+      <!-- Info -->
+      <div class="contact-info reveal">
+        <h2>Parliamo.</h2>
+        <p>Hai domande su un ordine, vuoi collaborare con noi o hai semplicemente qualcosa da dire?
+          Siamo qui. Rispondiamo entro 24 ore nei giorni lavorativi.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            info@hynex.it
+          </div>
+          <div class="contact-detail-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.14 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.55-.55a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+            +39 02 0000 0000
+          </div>
+          <div class="contact-detail-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Milano, Italia
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="reveal">
+        <div class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="cNome">Nome</label>
+              <input class="input" type="text" id="cNome" placeholder="Mario" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cCognome">Cognome</label>
+              <input class="input" type="text" id="cCognome" placeholder="Rossi" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cEmail">Email</label>
+            <input class="input" type="email" id="cEmail" placeholder="mario@esempio.it" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cOggetto">Oggetto</label>
+            <input class="input" type="text" id="cOggetto" placeholder="Ordine / Collaborazione / Altro" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cMessaggio">Messaggio</label>
+            <textarea class="input" id="cMessaggio" placeholder="Scrivi qui il tuo messaggio..."></textarea>
+          </div>
+          <button class="btn-send" onclick="sendContactForm()">INVIA MESSAGGIO</button>
+        </div>
+
+        <!-- Conferma statica -->
+        <div class="form-confirm" id="formConfirm">
+          <h3>Messaggio inviato ✓</h3>
+          <p>Grazie per averci scritto. Ti risponderemo entro 24 ore.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="footer__logo">HYNEX</span>
+      <p class="footer__copy">© 2025 Hynex. Tutti i diritti riservati.</p>
+      <div class="footer__links">
+        <a href="about.html">About</a>
+        <a href="catalogo.html">Shop</a>
+        <a href="carrello.html">Carrello</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* ── Cart count ── */
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof getCart === 'function') {
+        const total = getCart().reduce((s, i) => s + (i.qty || 1), 0);
+        const el = document.getElementById('cartCount');
+        if (el) el.textContent = total;
+      }
+      if (typeof observeReveal === 'function') observeReveal();
+    });
+
+    /* ── Form contatti (statico, simulato) ── */
+    function sendContactForm() {
+      const nome     = document.getElementById('cNome').value.trim();
+      const email    = document.getElementById('cEmail').value.trim();
+      const msg      = document.getElementById('cMessaggio').value.trim();
+
+      if (!nome || !email || !msg) {
+        showToast('Compila almeno nome, email e messaggio.');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast('Inserisci un\'email valida.');
+        return;
+      }
+
+      // Simulazione invio (il form è statico, no backend)
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formConfirm').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
