@@ -760,3 +760,12 @@ h1, h2, h3, h4 {
 }
 .input::placeholder { color: var(--grey); }
 .input:focus { border-color: var(--grey); }
+
+.section-header--flush {
+  padding-top: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.btn--mt {
+  margin-top: 2rem;
+}
