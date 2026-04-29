@@ -43,14 +43,23 @@ function renderProdotto() {
   document.getElementById('breadcrumbNome').textContent = p.nome;
   document.title = `${p.nome} — HYNEX`;
 
-  // Gallery (placeholder immagine basata su categoria)
-  const mainEl = document.getElementById('galleryMain');
+  // Gallery — usa immagine_url se disponibile, altrimenti placeholder SVG
+const mainEl = document.getElementById('galleryMain');
+if (p.immagine_url) {
+  mainEl.innerHTML = `<img 
+    src="${p.immagine_url}" 
+    alt="${p.nome}" 
+    style="width:100%;height:100%;object-fit:cover;"
+    onerror="this.parentElement.innerHTML='<div style=\\'width:100%;height:100%;background:var(--grey-2);display:flex;align-items:center;justify-content:center;\\'><svg width=\\'64\\' height=\\'64\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'var(--border)\\' stroke-width=\\'1\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg></div>'"
+  />`;
+} else {
   mainEl.innerHTML = `<div style="width:100%;height:100%;background:var(--grey-2);display:flex;align-items:center;justify-content:center;">
     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--border)" stroke-width="1">
       <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
       <polyline points="21 15 16 10 5 21"/>
     </svg>
   </div>`;
+}
 
   // Se ci fosse un campo immagine_url nel DB, si userebbe:
   // mainEl.innerHTML = `<img src="${p.immagine_url}" alt="${p.nome}" />`;
