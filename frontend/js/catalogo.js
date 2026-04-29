@@ -158,18 +158,18 @@ function renderProducts() {
     card.style.transitionDelay = `${Math.min(i, 8) * 0.04}s`;
 
     card.innerHTML = `
-  <div class="product-card__img-wrap">
-    ${p.immagine_url
-      ? `<img class="product-card__img" src="${p.immagine_url}" alt="${p.nome}" loading="lazy"
-             onerror="this.parentElement.innerHTML='<div class=\\'product-card__placeholder\\'><svg width=\\'48\\' height=\\'48\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'white\\' stroke-width=\\'1\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg></div>'" />`
-      : `<div class="product-card__placeholder">
-           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
-             <rect x="3" y="3" width="18" height="18" rx="2"/>
-             <circle cx="8.5" cy="8.5" r="1.5"/>
-             <polyline points="21 15 16 10 5 21"/>
-           </svg>
-         </div>`
-    }
+    <div class="product-card__img-wrap">
+      ${p.immagine_url
+        ? `<img class="product-card__img" src="${p.immagine_url}" alt="${p.nome}" loading="lazy"
+              onerror="this.parentElement.innerHTML='<div class=\\'product-card__placeholder\\'><svg width=\\'48\\' height=\\'48\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'white\\' stroke-width=\\'1\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><polyline points=\\'21 15 16 10 5 21\\'/></svg></div>'" />`
+        : `<div class="product-card__placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </div>`
+      }
         <button class="product-card__quick-add"
           data-id="${p.id}"
           data-nome="${p.nome}"

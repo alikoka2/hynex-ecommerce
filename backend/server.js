@@ -132,19 +132,44 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // GET statistiche
-  if (req.method === 'GET' && urlPath === '/api/statistiche') {
+// GET statistiche
+if (req.method === 'GET' && urlPath === '/api/statistiche') {
+  // Query 1: prodotti per categoria
+  db.query(`
+    SELECT c.nome, COUNT(p.id) AS numero_prodotti, AVG(p.prezzo) AS prezzo_medio
+    FROM categorie c LEFT JOIN prodotti p ON c.id = p.categoria_id
+    GROUP BY c.id
+  `, (err, categorie) => {
+    if (err) { res.writeHead(500); res.end(JSON.stringify({ errore: err.message })); return; }
+
+    // Query 2: totale ordini e fatturato
     db.query(`
-      SELECT c.nome, COUNT(p.id) AS numero_prodotti, AVG(p.prezzo) AS prezzo_medio
-      FROM categorie c LEFT JOIN prodotti p ON c.id = p.categoria_id
-      GROUP BY c.id
-    `, (err, results) => {
-      if (err) { res.writeHead(500); res.end(JSON.stringify({ errore: err.message })); return; }
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(results));
+      SELECT COUNT(*) AS totale_ordini, COALESCE(SUM(totale), 0) AS fatturato_totale
+      FROM ordini
+    `, (err2, riepilogo) => {
+      if (err2) { res.writeHead(500); res.end(JSON.stringify({ errore: err2.message })); return; }
+
+      // Query 3: ultimi 5 ordini
+      db.query(`
+        SELECT id, nome_cliente, email, totale, data_ordine
+        FROM ordini
+        ORDER BY data_ordine DESC
+        LIMIT 5
+      `, (err3, ordini_recenti) => {
+        if (err3) { res.writeHead(500); res.end(JSON.stringify({ errore: err3.message })); return; }
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          categorie,
+          totale_ordini: riepilogo[0].totale_ordini,
+          fatturato_totale: riepilogo[0].fatturato_totale,
+          ordini_recenti
+        }));
+      });
     });
-    return;
-  }
+  });
+  return;
+}
 
   // Serve file statici del frontend
   const staticBase = path.join(__dirname, '../frontend');

@@ -1,4 +1,4 @@
-# Hynex — E-commerce Abbigliamento
+# Hynex | E-commerce Abbigliamento
 
 Sito e-commerce di abbigliamento urban/streetwear realizzato come progetto universitario per il corso di Programmazione Web.
 
