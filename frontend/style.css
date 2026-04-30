@@ -732,6 +732,7 @@ h1, h2, h3, h4 {
   .footer__bottom { flex-direction: column; text-align: center; }
   .grid-products { grid-template-columns: repeat(2, 1fr); }
   .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-card__name { white-space: normal; }
 }
 
 /* ══════════════════════════════════════════════

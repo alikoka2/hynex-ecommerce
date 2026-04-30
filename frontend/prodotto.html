@@ -28,9 +28,22 @@
       gap: 4rem;
       padding-bottom: 6rem;
     }
-    @media(max-width:768px){
-      .product-detail { grid-template-columns: 1fr; gap: 2rem; }
-    }
+@media(max-width:768px){
+  .product-detail { grid-template-columns: 1fr; gap: 2rem; }
+
+  /* Gallery: sticky non serve su mobile */
+  .product-gallery { position: static; }
+
+  /* Titolo: già clamp ma forziamo min più basso */
+  .product-title { font-size: 2.2rem; }
+
+  /* Qty row: wrap se non ci sta */
+  .qty-row { flex-wrap: wrap; }
+  .btn-add-cart { flex: unset; width: 100%; }
+
+  /* Accordion trigger testo non si sovrapponga */
+  .accordion-trigger { font-size: .8rem; gap: .5rem; }
+}
 
     /* ── Gallery ── */
     .product-gallery { position: sticky; top: 100px; align-self: start; }
@@ -241,7 +254,7 @@
     .p-skeleton-prezzo { height:36px; width:120px; }
     .p-skeleton-desc   { height:72px; }
     .p-hidden          { display:none; }
-    .main-content      { padding-top: 6rem; }
+    .main-content      { padding-top: 6rem; padding-inline: 0; }
     .skeleton-fill     { width:100%; height:100%; }
   </style>
 </head>
