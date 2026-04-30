@@ -423,7 +423,8 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+<script src="js/main.js"></script>
+  <script src="js/about.js"></script>
   <script>
     /* ── Cart count ── */
     document.addEventListener('DOMContentLoaded', () => {
@@ -434,26 +435,6 @@
       }
       if (typeof observeReveal === 'function') observeReveal();
     });
-
-    /* ── Form contatti (statico, simulato) ── */
-    function sendContactForm() {
-      const nome     = document.getElementById('cNome').value.trim();
-      const email    = document.getElementById('cEmail').value.trim();
-      const msg      = document.getElementById('cMessaggio').value.trim();
-
-      if (!nome || !email || !msg) {
-        showToast('Compila almeno nome, email e messaggio.');
-        return;
-      }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showToast('Inserisci un\'email valida.');
-        return;
-      }
-
-      // Simulazione invio (il form è statico, no backend)
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('formConfirm').style.display = 'block';
-    }
   </script>
 </body>
 </html>

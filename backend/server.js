@@ -171,6 +171,31 @@ if (req.method === 'GET' && urlPath === '/api/statistiche') {
   return;
 }
 
+// POST contatti
+  if (req.method === 'POST' && urlPath === '/api/contatti') {
+    const body = await parseBody(req);
+    const { nome, email, oggetto, messaggio } = body;
+    if (!nome || !email || !messaggio) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ errore: 'Campi obbligatori mancanti' }));
+      return;
+    }
+    db.query(
+      'INSERT INTO messaggi (nome, email, oggetto, messaggio) VALUES (?, ?, ?, ?)',
+      [nome.trim(), email.trim(), (oggetto || '').trim(), messaggio.trim()],
+      (err) => {
+        if (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ errore: err.message }));
+          return;
+        }
+        res.writeHead(201, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true }));
+      }
+    );
+    return;
+  }
+
   // Serve file statici del frontend
   const staticBase = path.join(__dirname, '../frontend');
   let filePath = urlPath === '/' ? '/index.html' : urlPath;
