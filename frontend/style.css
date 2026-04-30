@@ -704,7 +704,18 @@ h1, h2, h3, h4 {
    RESPONSIVE
 ══════════════════════════════════════════════ */
 @media (max-width: 900px) {
-  .navbar__nav { display: none; }
+  .navbar__nav {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: var(--black);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    gap: 1.2rem;
+    z-index: 99;
+  }
+  .navbar__nav.is-open { display: flex; }
   .navbar__hamburger { display: flex; }
   .about-strip { grid-template-columns: 1fr; gap: 2rem; }
   .hero__title { font-size: clamp(3.5rem, 16vw, 8rem); }

@@ -120,10 +120,10 @@ function renderCategorie(categorie) {
   const maxProdotti = Math.max(...categorie.map(c => parseInt(c.numero_prodotti || 0)), 1);
 
   const items = categorie.map(c => {
-    const count   = parseInt(c.numero_prodotti || 0);
-    const pct     = Math.round((count / maxProdotti) * 100);
+    const count       = parseInt(c.numero_prodotti || 0);
+    const pct         = Math.round((count / maxProdotti) * 100);
     const prezzoMedio = parseFloat(c.prezzo_medio || 0);
-    const prezzoStr = prezzoMedio > 0
+    const prezzoStr   = prezzoMedio > 0
       ? `prezzo medio € ${prezzoMedio.toFixed(2).replace('.', ',')}`
       : 'nessun prodotto';
 

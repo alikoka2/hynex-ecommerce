@@ -15,26 +15,24 @@ if (navbar) {
 const hamburger = document.getElementById('hamburger');
 if (hamburger) {
   hamburger.addEventListener('click', () => {
-    // Semplice toggle visibilità nav mobile
     const nav = document.querySelector('.navbar__nav');
-    const isOpen = nav.style.display === 'flex';
-    nav.style.display = isOpen ? '' : 'flex';
-    nav.style.flexDirection = 'column';
-    nav.style.position = 'fixed';
-    nav.style.top = '64px';
-    nav.style.left = '0';
-    nav.style.right = '0';
-    nav.style.background = 'var(--black)';
-    nav.style.borderBottom = '1px solid var(--border)';
-    nav.style.padding = '1.5rem 2rem';
-    nav.style.gap = '1.2rem';
-    nav.style.zIndex = '99';
+    const isOpen = nav.classList.toggle('is-open');
 
-    // Animazione hamburger → X
     const spans = hamburger.querySelectorAll('span');
-    spans[0].style.transform = isOpen ? '' : 'translateY(6.5px) rotate(45deg)';
-    spans[1].style.opacity  = isOpen ? '' : '0';
-    spans[2].style.transform = isOpen ? '' : 'translateY(-6.5px) rotate(-45deg)';
+    spans[0].style.transform = isOpen ? 'translateY(6.5px) rotate(45deg)' : '';
+    spans[1].style.opacity   = isOpen ? '0' : '';
+    spans[2].style.transform = isOpen ? 'translateY(-6.5px) rotate(-45deg)' : '';
+  });
+
+  // Chiudi menu cliccando un link
+  document.querySelectorAll('.navbar__nav a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.navbar__nav').classList.remove('is-open');
+      const spans = hamburger.querySelectorAll('span');
+      spans[0].style.transform = '';
+      spans[1].style.opacity   = '';
+      spans[2].style.transform = '';
+    });
   });
 }
 
