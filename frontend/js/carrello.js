@@ -148,9 +148,9 @@ async function handleCheckout() {
   const sped   = subtot >= SPEDIZIONE_GRATIS_SOGLIA ? 0 : SPEDIZIONE_COSTO;
   const tot    = subtot + sped;
 
-  const payload = {
-    cliente_nome:     document.getElementById('nome').value.trim(),
-    cliente_email:    document.getElementById('email').value.trim(),
+const payload = {
+    nome_cliente:  document.getElementById('nome').value.trim(),
+    email:         document.getElementById('email').value.trim(),
     indirizzo:        [
       document.getElementById('indirizzo').value.trim(),
       document.getElementById('citta').value.trim(),
@@ -158,13 +158,13 @@ async function handleCheckout() {
     ].join(', '),
     totale:           tot.toFixed(2),
     prodotti: cart.map(item => ({
-      prodotto_id: item.id,
-      quantita:    item.qty,
-      prezzo:      item.prezzo,
-      taglia:      item.taglia || null,
-      colore:      item.colore || null,
+      id:       item.id,        // ← era prodotto_id
+      quantita: item.qty,
+      prezzo:   item.prezzo,
+      taglia:   item.taglia || null,
+      colore:   item.colore || null,
     })),
-  };
+};
 
   try {
     const res = await fetch('http://localhost:3000/api/ordini', {
@@ -175,14 +175,14 @@ async function handleCheckout() {
 
     if (!res.ok) throw new Error(`Server ${res.status}`);
 
-    const data = await res.json();
+const data = await res.json();
 
-    // Svuota carrello
-    saveCart([]);
-    updateCartCount();
+// Svuota carrello
+saveCart([]);
+updateCartCount();
 
-    // Mostra successo
-    showSuccess(data.id || data.ordine_id || '—');
+// Mostra successo
+showSuccess(data.ordine_id ?? '—');
 
   } catch (err) {
     console.error('Checkout error:', err);
@@ -214,11 +214,4 @@ function escHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
-}
-
-function updateCartCount() {
-  const cart  = typeof getCart === 'function' ? getCart() : [];
-  const total = cart.reduce((s, i) => s + (i.qty || 1), 0);
-  const el    = document.getElementById('cartCount');
-  if (el) el.textContent = total;
 }

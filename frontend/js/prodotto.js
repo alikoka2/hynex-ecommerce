@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
 
+  console.log('ID prodotto:', id, '| URL:', window.location.search);
+
   if (!id) {
     showError('Prodotto non trovato.');
     return;
@@ -26,11 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ─── Fetch ─────────────────────────────────────────────── */
 async function fetchProdotto(id) {
   try {
+    console.log('1. Inizio fetch, id:', id);
     const res = await fetch(`http://localhost:3000/api/prodotto?id=${id}`);
+    console.log('2. Risposta ricevuta, status:', res.status);
     if (!res.ok) throw new Error('Not found');
     prodotto = await res.json();
+    console.log('3. Dati prodotto:', prodotto.nome);
+    console.log('4. galleryMain esiste?', document.getElementById('galleryMain'));
     renderProdotto();
+    console.log('5. renderProdotto completata');
   } catch (err) {
+    console.error('FETCH ERROR:', err.message);
     showError('Impossibile caricare il prodotto. Riprova più tardi.');
   }
 }
@@ -44,8 +52,12 @@ function renderProdotto() {
   document.title = `${p.nome} — HYNEX`;
 
   // Gallery — usa immagine_url se disponibile, altrimenti placeholder SVG
-const mainEl = document.getElementById('galleryMain');
-if (p.immagine_url) {
+  const mainEl = document.getElementById('galleryMain');
+  if (!mainEl) {
+    console.error('galleryMain non trovato — DOM probabilmente sovrascritto');
+    return;
+  }
+  if (p.immagine_url) {
   mainEl.innerHTML = `<img 
     src="${p.immagine_url}" 
     alt="${p.nome}" 
@@ -97,7 +109,7 @@ if (p.immagine_url) {
   document.getElementById('btnAddCart').addEventListener('click', handleAddToCart);
 
   // Reveal animations
-  if (typeof observeReveal === 'function') observeReveal();
+  document.querySelectorAll('.reveal').forEach(el => observeReveal(el));
 }
 
 /* ─── Selettore colori ──────────────────────────────────── */
@@ -179,7 +191,7 @@ function refreshSizeAvailability() {
       v.taglia === taglia &&
       (!selectedColor || v.colore === selectedColor)
     );
-    const disponibile = variante && variante.stock > 0;
+    const disponibile = variante && (variante.quantita_stock ?? variante.stock ?? 0) > 0;
     btn.disabled = !disponibile;
     if (btn.classList.contains('selected') && !disponibile) {
       btn.classList.remove('selected');
@@ -217,20 +229,20 @@ function updateStockBadge() {
   const badge = document.getElementById('stockBadge');
   const text  = document.getElementById('stockText');
 
-  if (!variante || variante.stock === 0) {
+  const stock = variante?.quantita_stock ?? variante?.stock ?? 0;
+  if (!variante || stock === 0) {
     badge.className = 'stock-badge out';
     text.textContent = 'Esaurito';
-  } else if (variante.stock <= 3) {
+  } else if (stock <= 3) {
     badge.className = 'stock-badge low';
-    text.textContent = `Ultimi ${variante.stock} rimasti`;
+    text.textContent = `Ultimi ${stock} rimasti`;
   } else {
     badge.className = 'stock-badge';
-    text.textContent = `Disponibile (${variante.stock})`;
+    text.textContent = `Disponibile (${stock})`;
   }
 
-  // Aggiorna max qty
   if (variante) {
-    document.getElementById('qtyInput').max = variante.stock;
+    document.getElementById('qtyInput').max = stock;
   }
 }
 

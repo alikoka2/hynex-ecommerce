@@ -1,10 +1,10 @@
 /* === ABOUT — Form Contatti === */
 
 async function sendContactForm() {
-  const nome     = document.getElementById('cNome').value.trim();
-  const cognome  = document.getElementById('cCognome').value.trim();
-  const email    = document.getElementById('cEmail').value.trim();
-  const oggetto  = document.getElementById('cOggetto').value.trim();
+  const nome      = document.getElementById('cNome').value.trim();
+  const cognome   = document.getElementById('cCognome').value.trim();
+  const email     = document.getElementById('cEmail').value.trim();
+  const oggetto   = document.getElementById('cOggetto').value.trim();
   const messaggio = document.getElementById('cMessaggio').value.trim();
 
   // Validazione
