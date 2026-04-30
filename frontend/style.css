@@ -722,7 +722,10 @@ h1, h2, h3, h4 {
 }
 @media (max-width: 600px) {
   .container { padding: 0 1rem; }
-  .hero { padding-bottom: 4rem; }
+  .hero { padding-bottom: 4rem; min-height: 500px; }
+  .hero__content { padding: 1.5rem 1rem 0; }
+  .hero__title { margin-bottom: 2rem; }
+  .hero__scroll { display: none; }
   .hero__footer { flex-direction: column; gap: 1.5rem; }
   .section-header { flex-direction: column; gap: 1rem; }
   .footer__top { flex-direction: column; gap: 2rem; }
