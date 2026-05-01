@@ -97,15 +97,12 @@ function renderProdotto() {
 
   // Attiva CTA se varianti
   if (variantiFlat.length === 0) {
-    // Prodotto senza varianti: aggiungi direttamente
     document.getElementById('btnAddCart').disabled = false;
-    document.getElementById('btnAddCart').addEventListener('click', addToCartDirect);
-    const sb = document.getElementById('stockBadge');
     document.getElementById('stockInfo').style.display = 'block';
     document.getElementById('stockText').textContent = 'Disponibile';
   }
 
-  // Pulsante add-to-cart
+  // Pulsante add-to-cart — un solo listener
   document.getElementById('btnAddCart').addEventListener('click', handleAddToCart);
 
   // Reveal animations
@@ -275,11 +272,12 @@ function handleAddToCart() {
   const qty = parseInt(document.getElementById('qtyInput').value) || 1;
 
   addToCart({
-    id:     prodotto.id,
-    nome:   prodotto.nome,
-    prezzo: prodotto.prezzo,
-    taglia: selectedSize  || null,
-    colore: selectedColor || null,
+    id:           prodotto.id,
+    nome:         prodotto.nome,
+    prezzo:       prodotto.prezzo,
+    immagine_url: prodotto.immagine_url || null,
+    taglia:       selectedSize  || null,
+    colore:       selectedColor || null,
     qty,
   });
 
