@@ -171,10 +171,8 @@ function renderProducts() {
           </div>`
       }
         <button class="product-card__quick-add"
-          data-id="${p.id}"
-          data-nome="${p.nome}"
-          data-prezzo="${p.prezzo}">
-          + Aggiungi
+          data-id="${p.id}">
+          Scegli →
         </button>
       </div>
       <div class="product-card__info">
@@ -198,11 +196,7 @@ function renderProducts() {
   grid.querySelectorAll('.product-card__quick-add').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      addToCart({
-        id: btn.dataset.id,
-        nome: btn.dataset.nome,
-        prezzo: btn.dataset.prezzo
-      });
+      window.location.href = `prodotto.html?id=${btn.dataset.id}`;
     });
   });
 }

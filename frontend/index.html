@@ -312,8 +312,8 @@
                    </div>`
               }
               <span class="product-card__badge">New</span>
-              <button class="product-card__quick-add" data-id="${p.id}" data-nome="${p.nome}" data-prezzo="${p.prezzo}">
-                Aggiungi al carrello
+              <button class="product-card__quick-add" data-id="${p.id}">
+                Scegli →
               </button>
             </div>
             <div class="product-card__info">
@@ -337,12 +337,7 @@
         grid.querySelectorAll('.product-card__quick-add').forEach(btn => {
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            addToCart({
-              id: btn.dataset.id,
-              nome: btn.dataset.nome,
-              prezzo: btn.dataset.prezzo,
-              qty: 1
-            });
+            window.location.href = `prodotto.html?id=${btn.dataset.id}`;
           });
         });
 
