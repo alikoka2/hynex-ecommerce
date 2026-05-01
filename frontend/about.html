@@ -220,22 +220,27 @@
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <div class="container navbar__inner">
-      <a href="index.html" class="navbar__logo">HYNEX</a>
-      <ul class="navbar__links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="catalogo.html">Catalogo</a></li>
-        <li><a href="about.html" class="active">About</a></li>
-      </ul>
-      <div class="navbar__actions">
-        <a href="carrello.html" class="cart-icon" id="cartIcon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-          <span class="cart-count" id="cartCount">0</span>
-        </a>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+    <a href="index.html" class="navbar__logo">HYNEX</a>
+
+    <ul class="navbar__nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="catalogo.html">Catalogo</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+
+    <div class="navbar__actions">
+      <a href="carrello.html" class="navbar__cart-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Carrello
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
