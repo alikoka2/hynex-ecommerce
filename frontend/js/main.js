@@ -113,5 +113,35 @@ function observeReveal(el) {
 // Osserva tutti gli elementi .reveal già presenti nel DOM
 document.querySelectorAll('.reveal').forEach(observeReveal);
 
+/* ── Contatori animati ─────────────────────── */
+function animateCounter(el) {
+  const text = el.textContent.trim();
+  const num = parseFloat(text);
+  if (isNaN(num)) return; // salta ∞, 48h, ecc.
+
+  const suffix = text.replace(/[\d.]/g, ''); // es. '+' o '%'
+  const duration = 1600;
+  const start = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    el.textContent = Math.floor(eased * num) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-box__num').forEach(el => counterObserver.observe(el));
+
 /* ── Init ──────────────────────────────────── */
 updateCartCount();

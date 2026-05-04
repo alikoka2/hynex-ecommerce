@@ -470,10 +470,11 @@ h1, h2, h3, h4 {
 .product-card.skeleton .product-card__category,
 .product-card.skeleton .product-card__name,
 .product-card.skeleton .product-card__price {
-  background: var(--grey-2);
+  background: linear-gradient(90deg, var(--grey-2) 25%, #2a2a2a 50%, var(--grey-2) 75%);
+  background-size: 800px 100%;
   color: transparent;
   border-radius: 2px;
-  animation: shimmer 1.4s infinite;
+  animation: shimmer 1.6s ease-in-out infinite;
 }
 .product-card.skeleton .product-card__img-wrap { height: 320px; }
 .product-card.skeleton .product-card__category { height: 10px; width: 60%; margin-bottom: 0.5rem; }
@@ -684,9 +685,8 @@ h1, h2, h3, h4 {
   100% { transform: scaleY(0); transform-origin: bottom; }
 }
 @keyframes shimmer {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 1; }
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
 }
 
 /* Reveal on scroll */
