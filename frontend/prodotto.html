@@ -50,9 +50,12 @@
     .gallery-main img {
       width: 100%; height: 100%;
       object-fit: cover;
-      transition: transform .6s ease;
+      transition: transform .6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center center;
+      will-change: transform;
     }
-    .gallery-main:hover img { transform: scale(1.04); }
+.gallery-main { cursor: zoom-in; }
+.gallery-main:hover img { transform: scale(1.08); }
     .gallery-thumbs {
       display: flex;
       gap: .5rem;
