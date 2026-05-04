@@ -321,3 +321,48 @@ function showError(msg) {
       <a href="catalogo.html" class="btn btn-outline" style="margin-top:2rem;display:inline-block;">← Torna al catalogo</a>
     </div>`;
 }
+
+// ── Pan & Zoom gallery ──
+(function () {
+  const main = document.getElementById('galleryMain');
+  let zoomed = false;
+
+  main.addEventListener('click', (e) => {
+    zoomed = !zoomed;
+    main.classList.toggle('zoomed', zoomed);
+
+    if (zoomed) {
+      setOrigin(e);
+      main.querySelector('img').style.transform = 'scale(2)';
+    } else {
+      resetZoom();
+    }
+  });
+
+  main.addEventListener('mousemove', (e) => {
+    if (!zoomed) return;
+    setOrigin(e);
+  });
+
+  main.addEventListener('mouseleave', () => {
+    if (!zoomed) return;
+    resetZoom();
+    zoomed = false;
+    main.classList.remove('zoomed');
+  });
+
+  function setOrigin(e) {
+    const r = main.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width  * 100).toFixed(2);
+    const y = ((e.clientY - r.top)  / r.height * 100).toFixed(2);
+    const img = main.querySelector('img');
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = 'scale(2)';
+  }
+
+  function resetZoom() {
+    const img = main.querySelector('img');
+    img.style.transformOrigin = 'center center';
+    img.style.transform = 'scale(1)';
+  }
+})();

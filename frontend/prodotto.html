@@ -55,6 +55,8 @@
       will-change: transform;
     }
 .gallery-main { cursor: zoom-in; }
+.gallery-main.zoomed { cursor: zoom-out; }
+.gallery-main.zoomed img { transition: transform-origin 0s; }
 .gallery-main:hover img { transform: scale(1.08); }
     .gallery-thumbs {
       display: flex;
