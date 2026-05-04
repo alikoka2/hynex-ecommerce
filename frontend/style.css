@@ -700,6 +700,10 @@ h1, h2, h3, h4 {
   transform: translateY(0);
 }
 
+/* ── Page transition ───────────────────────── */
+body { transition: opacity 0.25s ease; }
+body.page-exit { opacity: 0; }
+
 /* ══════════════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════════════ */

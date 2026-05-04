@@ -143,5 +143,25 @@ const counterObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.stat-box__num').forEach(el => counterObserver.observe(el));
 
+/* ── Page transition fade ──────────────────── */
+(function initPageTransition() {
+  document.body.classList.remove('page-exit');
+
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') ||
+        href.startsWith('mailto') || a.target === '_blank') return;
+    e.preventDefault();
+    document.body.classList.add('page-exit');
+    setTimeout(() => { window.location.href = href; }, 260);
+  });
+
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) document.body.classList.remove('page-exit');
+  });
+})();
+
 /* ── Init ──────────────────────────────────── */
 updateCartCount();
