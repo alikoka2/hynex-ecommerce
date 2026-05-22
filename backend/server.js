@@ -99,7 +99,12 @@ const server = http.createServer(async (req, res) => {
 
   // GET tutte le categorie
   if (req.method === 'GET' && urlPath === '/api/categorie') {
-    db.query('SELECT * FROM categorie', (err, results) => {
+    db.query(`
+      SELECT c.id, c.nome, COUNT(p.id) AS num_prodotti
+      FROM categorie c
+      LEFT JOIN prodotti p ON p.categoria_id = c.id
+      GROUP BY c.id, c.nome
+    `, (err, results) => {
       if (err) { res.writeHead(500); res.end(JSON.stringify({ errore: err.message })); return; }
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(results));
