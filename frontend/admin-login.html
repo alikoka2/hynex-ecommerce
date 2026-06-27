@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — HYNEX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #0a0a0a;
+      --white:  #ffffff;
+      --grey:   #888;
+      --grey-2: #1a1a1a;
+      --border: #2a2a2a;
+      --accent: #2d6a4f;
+      --danger: #f87171;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Layout ── */
+    .login-wrapper {
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+    }
+
+    /* ── Logo ── */
+    .login-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 4px;
+      text-align: center;
+      margin-bottom: .4rem;
+    }
+
+    .login-subtitle {
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-align: center;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── Card ── */
+    .login-card {
+      background: var(--grey-2);
+      border: 1px solid var(--border);
+      padding: 2.4rem;
+    }
+
+    .login-card h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: .1em;
+      margin-bottom: 1.8rem;
+      color: var(--white);
+    }
+
+    /* ── Form ── */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .form-label {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: .75rem 1rem;
+      background: var(--black);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--white);
+    }
+
+    /* ── Error message ── */
+    .login-error {
+      display: none;
+      background: rgba(248, 113, 113, .1);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      font-size: .8rem;
+      padding: .7rem 1rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: .03em;
+    }
+
+    .login-error.show { display: block; }
+
+    /* ── Submit ── */
+    .btn-login {
+      width: 100%;
+      padding: .9rem;
+      margin-top: .4rem;
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: .15em;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+
+    .btn-login:hover { opacity: .85; }
+    .btn-login:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ── Footer link ── */
+    .login-back {
+      display: block;
+      text-align: center;
+      margin-top: 1.8rem;
+      font-size: .78rem;
+      color: var(--grey);
+      text-decoration: none;
+      letter-spacing: .06em;
+      transition: color .2s;
+    }
+
+    .login-back:hover { color: var(--white); }
+
+    /* ── Shake animation per errore ── */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-8px); }
+      40%       { transform: translateX(8px); }
+      60%       { transform: translateX(-5px); }
+      80%       { transform: translateX(5px); }
+    }
+    .shake { animation: shake .4s ease; }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+
+    <div class="login-logo">HYNEX</div>
+    <p class="login-subtitle">Pannello di amministrazione</p>
+
+    <div class="login-card">
+      <h2>Accesso riservato</h2>
+
+      <div class="login-error" id="loginError">
+        Credenziali non valide. Riprova.
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <input
+          class="form-input"
+          type="text"
+          id="username"
+          placeholder="admin"
+          autocomplete="username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input
+          class="form-input"
+          type="password"
+          id="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <button class="btn-login" id="btnLogin">ACCEDI</button>
+    </div>
+
+    <a href="index.html" class="login-back">← Torna al sito</a>
+
+  </div>
+
+  <script>
+    // ── Credenziali hardcoded ──────────────────────────
+    const ADMIN_USER = 'admin';
+    const ADMIN_PASS = 'hynex2025';
+
+    // ── Se già autenticato, vai diretto alla dashboard ──
+    if (sessionStorage.getItem('hynex_admin') === 'true') {
+      window.location.replace('admin.html');
+    }
+
+    // ── Login ─────────────────────────────────────────
+    function tryLogin() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
+      const btn = document.getElementById('btnLogin');
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        // Autenticato: salva in sessionStorage e redirect
+        sessionStorage.setItem('hynex_admin', 'true');
+        btn.textContent = 'ACCESSO...';
+        btn.disabled = true;
+        setTimeout(() => window.location.replace('admin.html'), 400);
+      } else {
+        // Errore: mostra messaggio e animazione shake
+        errorEl.classList.add('show');
+        document.querySelector('.login-card').classList.remove('shake');
+        void document.querySelector('.login-card').offsetWidth; // forza reflow
+        document.querySelector('.login-card').classList.add('shake');
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+      }
+    }
+
+    // ── Event listeners ───────────────────────────────
+    document.getElementById('btnLogin').addEventListener('click', tryLogin);
+
+    // Enter su qualsiasi campo → login
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') tryLogin();
+    });
+
+    // Nasconde errore quando l'utente riprende a digitare
+    document.getElementById('username').addEventListener('input', () => {
+      document.getElementById('loginError').classList.remove('show');
+    });
+    document.getElementById('password').addEventListener('input', () => {
+      document.getElementById('loginError').classList.remove('show');
+    });
+  </script>
+
+</body>
+</html>

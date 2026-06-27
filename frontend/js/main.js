@@ -163,5 +163,14 @@ document.querySelectorAll('.stat-box__num').forEach(el => counterObserver.observ
   });
 })();
 
+/* ── Admin easter egg: doppio click sul logo ──────────────── */
+const adminLogo = document.querySelector('.navbar__logo');
+if (adminLogo) {
+  adminLogo.addEventListener('dblclick', (e) => {
+    e.preventDefault();
+    window.location.href = 'admin-login.html';
+  });
+}
+
 /* ── Init ──────────────────────────────────── */
 updateCartCount();

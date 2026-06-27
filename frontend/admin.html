@@ -127,6 +127,29 @@
 
     .admin-sidebar__footer a:hover { color: var(--white); }
 
+    .admin-logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin-top: 10px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: var(--grey);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      transition: color 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .admin-logout-btn:hover { color: #f87171; }
+
+    .admin-topbar__user {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     /* ============================================================
        MAIN CONTENT
        ============================================================ */
@@ -515,13 +538,13 @@
         </svg>
         Dashboard
       </a>
-      <a href="../frontend/catalogo.html">
+      <a href="catalogo.html">
         <svg class="admin-nav__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M2 4h12M2 8h12M2 12h8"/>
         </svg>
         Catalogo
       </a>
-      <a href="../frontend/carrello.html">
+      <a href="carrello.html">
         <svg class="admin-nav__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M1 1h2l2 8h7l2-5H5"/>
           <circle cx="7" cy="13" r="1"/>
@@ -529,7 +552,7 @@
         </svg>
         Ordini
       </a>
-      <a href="../frontend/index.html">
+      <a href="index.html">
         <svg class="admin-nav__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M8 1L1 7h2v7h4v-4h2v4h4V7h2L8 1z"/>
         </svg>
@@ -538,12 +561,18 @@
     </nav>
 
     <div class="admin-sidebar__footer">
-      <a href="../frontend/index.html">
+      <a href="index.html">
         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M10 3L5 8l5 5"/>
+          <path d="M8 1L1 7h2v7h4v-4h2v4h4V7h2L8 1z"/>
         </svg>
-        Esci dall'admin
+        Vai al sito
       </a>
+      <button id="btnLogout" class="admin-logout-btn">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10 8H2M6 4L2 8l4 4M10 3h3a1 1 0 011 1v8a1 1 0 01-1 1h-3"/>
+        </svg>
+        Logout
+      </button>
     </div>
   </aside>
 
@@ -557,6 +586,8 @@
       <span class="admin-topbar__meta">
         <span class="admin-topbar__dot"></span>
         Server attivo — localhost:3000
+        &nbsp;·&nbsp;
+        <span class="admin-topbar__user">admin</span>
       </span>
     </header>
 
@@ -658,6 +689,12 @@
     </div><!-- /admin-content -->
   </main>
 
+  <!-- Auth guard: redirect immediato se non autenticato, prima ancora che admin.js carichi -->
+  <script>
+    if (sessionStorage.getItem('hynex_admin') !== 'true') {
+      window.location.replace('admin-login.html');
+    }
+  </script>
   <script src="js/admin.js"></script>
 </body>
 </html>

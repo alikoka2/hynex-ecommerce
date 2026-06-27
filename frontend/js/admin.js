@@ -6,11 +6,36 @@
 const API_BASE = 'http://localhost:3000';
 
 // ============================================================
+// AUTH — controlla sessionStorage prima di tutto il resto
+// ============================================================
+function checkAuth() {
+  if (sessionStorage.getItem('hynex_admin') !== 'true') {
+    // Non autenticato → redirect alla pagina di login
+    window.location.replace('admin-login.html');
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('hynex_admin');
+  window.location.replace('admin-login.html');
+}
+
+// ============================================================
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+  checkAuth();           // primo controllo: blocca se non autenticato
   caricaDashboard();
+  setupLogoutBtn();
 });
+
+// ============================================================
+// LOGOUT BUTTON
+// ============================================================
+function setupLogoutBtn() {
+  const btn = document.getElementById('btnLogout');
+  if (btn) btn.addEventListener('click', logout);
+}
 
 // ============================================================
 // FETCH STATISTICHE
@@ -74,7 +99,6 @@ function renderOrdiniRecenti(ordini) {
   const tbody = document.getElementById('ordini-tbody');
 
   if (!ordini || ordini.length === 0) {
-    // Nessun ordine: mostra messaggio vuoto
     tbody.closest('table').remove();
     document.getElementById('ordini-container').innerHTML = `
       <div class="admin-error">
@@ -142,7 +166,6 @@ function renderCategorie(categorie) {
 
   container.innerHTML = items;
 
-  // Anima le barre dopo il render (rAF per garantire il reflow)
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       container.querySelectorAll('.categoria-bar__fill').forEach(bar => {
@@ -156,7 +179,6 @@ function renderCategorie(categorie) {
 // STATO ERRORE GLOBALE
 // ============================================================
 function mostraErrore() {
-  // KPI in errore
   ['kpi-fatturato', 'kpi-ordini', 'kpi-prodotti', 'kpi-categorie'].forEach(id => {
     const el = document.getElementById(id);
     el.classList.remove('loading');
@@ -166,7 +188,6 @@ function mostraErrore() {
     document.getElementById(id).textContent = 'errore di connessione';
   });
 
-  // Sezione ordini
   document.getElementById('ordini-container').innerHTML = `
     <div class="admin-error">
       <div class="admin-error__icon">⚠️</div>
@@ -177,7 +198,6 @@ function mostraErrore() {
       <button class="admin-error__retry" onclick="location.reload()">Riprova</button>
     </div>`;
 
-  // Sezione categorie
   document.getElementById('categorie-list').innerHTML = `
     <div class="admin-error">
       <div class="admin-error__msg">Dati non disponibili.</div>
@@ -187,11 +207,6 @@ function mostraErrore() {
 // ============================================================
 // UTILITY
 // ============================================================
-
-/**
- * Formatta una data ISO o MySQL in formato italiano leggibile
- * es: "2024-03-15T10:30:00.000Z" → "15 mar 2024, 10:30"
- */
 function formattaData(dataStr) {
   if (!dataStr) return '—';
   try {
@@ -204,9 +219,6 @@ function formattaData(dataStr) {
   }
 }
 
-/**
- * Escape HTML per evitare XSS nei dati dal DB
- */
 function escHTML(str) {
   if (!str) return '';
   return String(str)
